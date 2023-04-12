@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\livewireTestController;
+// use Livewire\Livewire;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +22,9 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::controller(livewireTestController::class)
+->prefix('livewire-test')->name('livewire-test.')->group(function(){
+    Route::get('index', 'index')->name('index');
+    Route::get('register', 'register')->name('register');
+});
