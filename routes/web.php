@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\livewireTestController;
 use App\Http\Controllers\AlpineTestController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ReservationController;
+
 // use Livewire\Livewire;
 
 /*
@@ -21,9 +23,9 @@ Route::get('/', function () {
     return view('calendar');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
 Route::prefix('manager')
 ->middleware('can:manager-higher')
@@ -34,9 +36,9 @@ Route::prefix('manager')
 
 Route::middleware('can:user-higher')
 ->group(function(){
-    Route::get('index', function () {
-        dd('user');
-    });
+    Route::get('/dashboard', [ReservationController::class, 'dashboard'])->name('dashboard');
+    Route::get('/{id}', [ReservationController::class, 'detail'])->name('events.detail');
+    Route::post('/{id}', [ReservationController::class, 'reserve'])->name('events.reserve');
 });
 
 Route::controller(livewireTestController::class)
